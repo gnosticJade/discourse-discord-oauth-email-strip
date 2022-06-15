@@ -4,7 +4,7 @@
 # about: Removes the need to gather/use user email information while using Discord OAuth, since it's not used elsewhere.
 # version: 1.0.0
 # authors: Jade#0001
-# url: https://git.rar.moe/jade/discourse-discord-ouath-email-strip
+# url: https://github.com/gnosticJade/discourse-discord-oauth-email-strip
 # required_version: 2.7.0
 # transpile_js: true
 
