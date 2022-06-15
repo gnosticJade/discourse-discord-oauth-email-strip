@@ -16,8 +16,8 @@ end
 require_dependency 'auth'
 require_dependency 'auth/discord_authenticator'
 
-class ::Auth::DiscordAuthenticator < Auth::ManagedAuthenticator
-  class ::DiscordStrategy < OmniAuth::Strategies::OAuth2
+class Auth::DiscordAuthenticator < Auth::ManagedAuthenticator
+  class DiscordStrategy < OmniAuth::Strategies::OAuth2
     option :scope, 'identify guilds'
     option :client_options,
             site: 'https://discordapp.com/api',
