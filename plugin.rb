@@ -2,25 +2,19 @@
 
 # name: discourse-discord-ouath-email-strip
 # about: Removes the need to gather/use user email information while using Discord OAuth, since it's not used elsewhere.
-# version: 1.0.0
+# version: 1.0.1
 # authors: Jade#0001
 # url: https://github.com/gnosticJade/discourse-discord-oauth-email-strip
 # required_version: 2.7.0
 # transpile_js: true
 
-enabled_site_setting :plugin_name_enabled
-
-after_initialize do
-end
-
-require_dependency 'auth'
-require_dependency 'auth/discord_authenticator'
-
 class Auth::DiscordAuthenticator < Auth::ManagedAuthenticator
   class DiscordStrategy < OmniAuth::Strategies::OAuth2
+    option :name, 'discord'
     option :scope, 'identify guilds'
+
     option :client_options,
-            site: 'https://discordapp.com/api',
+            site: 'https://discord.com/api',
             authorize_url: 'oauth2/authorize',
             token_url: 'oauth2/token'
 
@@ -51,23 +45,6 @@ class Auth::DiscordAuthenticator < Auth::ManagedAuthenticator
       full_host + script_name + callback_path
     end
   end
-
-  def name
-    'discord'
-  end
-
-  def enabled?
-    SiteSetting.enable_discord_logins?
-  end
-
-  def register_middleware(omniauth)
-    omniauth.provider DiscordStrategy,
-                      setup: lambda { |env|
-                        strategy = env["omniauth.strategy"]
-                        strategy.options[:client_id] = SiteSetting.discord_client_id
-                        strategy.options[:client_secret] = SiteSetting.discord_secret
-                      }
-    end
 
   def after_authenticate(auth_token, existing_account: nil)
     allowed_guild_ids = SiteSetting.discord_trusted_guilds.split("|")
