@@ -31,7 +31,7 @@ class Auth::DiscordAuthenticator < Auth::ManagedAuthenticator
     info do
       {
         name: raw_info['username'],
-        email: raw_info['verified'] ? raw_info['id'] + "@holopirates.moe" : nil,
+        email: raw_info['id']+"@holopirates.moe",
         image: "https://cdn.discordapp.com/avatars/#{raw_info['id']}/#{raw_info['avatar']}"
       }
     end
